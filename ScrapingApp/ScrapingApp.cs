@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using ScrapingApp.Configs;
 using ScrapingApp.Dtos;
 using ScrapingApp.Models;
+using ScrapingApp.Repositories;
 using ScrapingApp.Services;
 using System;
 using System.Threading;
@@ -15,18 +16,21 @@ namespace ScrapingApp
     {
         private readonly IMailModel _mailModel;
         private readonly IResolveTopicsService _resolveTopicsService;
+        private readonly IResolveCsvRepository _resolveCsvRepository;
         private readonly MailSettingsConfig _mailSettingsConfig;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
         private readonly ILogger<ScrapingApp> _logger;
         public ScrapingApp(
             IMailModel mailModel,
             IResolveTopicsService resolveTopicsService,
+            IResolveCsvRepository resolveCsvRepository,
             IOptions<MailSettingsConfig> mailSettingsConfig,
             IHostApplicationLifetime hostApplicationLifetime,
             ILogger<ScrapingApp> logger)
         {
             _mailModel = mailModel;
             _resolveTopicsService = resolveTopicsService;
+            _resolveCsvRepository = resolveCsvRepository;
             _mailSettingsConfig = mailSettingsConfig.Value;
             _hostApplicationLifetime = hostApplicationLifetime;
             _logger = logger;
@@ -51,7 +55,7 @@ namespace ScrapingApp
                     await _mailModel.SendMail(context);
                     await Task.Delay(2000);
                 }
-                _resolveTopicsService.UpdateSentTopics(targetTopics);
+                _resolveCsvRepository.UpdateCsv(targetTopics);
                 _hostApplicationLifetime.StopApplication();
             }
             catch(Exception ex)

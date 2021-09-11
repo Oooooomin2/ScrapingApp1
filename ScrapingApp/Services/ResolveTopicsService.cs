@@ -14,8 +14,6 @@ namespace ScrapingApp.Services
         ValueTask<IEnumerable<Topic>> GetSendTargets();
 
         IEnumerable<Topic> FormatRawTopics(IHtmlCollection<IElement> elements);
-
-        void UpdateSentTopics(IEnumerable<Topic> topics);
     }
 
     public class ResolveTopicsService : IResolveTopicsService
@@ -54,11 +52,6 @@ namespace ScrapingApp.Services
         {
             var targets = await _getTopicRepository.GetTopicDataAsync();
             return FormatRawTopics(targets).FilterTopicsWithCsv(_resolveCsvRepository.GetTopics());
-        }
-
-        public void UpdateSentTopics(IEnumerable<Topic> topics)
-        {
-            _resolveCsvRepository.UpdateCsv(topics);
         }
     }
     

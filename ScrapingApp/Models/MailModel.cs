@@ -30,7 +30,7 @@ namespace ScrapingApp.Models
         /// <summary>
         /// メールの本文を作成します。
         /// </summary>
-        /// <param name="htmlCollection"></param>
+        /// <param name="topics"></param>
         /// <returns></returns>
         string CreateMailBody(IEnumerable<Topic> topics);
     }
