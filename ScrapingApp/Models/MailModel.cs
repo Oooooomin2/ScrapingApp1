@@ -52,7 +52,7 @@ namespace ScrapingApp.Models
         {
             if (!topics.Any()) return _mailSettingsConfig.DefaultResponse;
 
-            StringBuilder sb = new();
+            var sb = new StringBuilder();
             foreach(var topic in topics)
             {
                 sb.AppendLine($"{topic.Title} 投稿日付: {topic.CreatedTime}");

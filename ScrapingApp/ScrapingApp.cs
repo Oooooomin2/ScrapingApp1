@@ -16,21 +16,24 @@ namespace ScrapingApp
     {
         private readonly IMailModel _mailModel;
         private readonly IResolveTopicsService _resolveTopicsService;
-        private readonly IResolveCsvRepository _resolveCsvRepository;
+        private readonly IResolveCsvService _resolveCsvService;
+        private readonly IResolveS3Repository _resolveS3Repository;
         private readonly MailSettingsConfig _mailSettingsConfig;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
         private readonly ILogger<ScrapingApp> _logger;
         public ScrapingApp(
             IMailModel mailModel,
             IResolveTopicsService resolveTopicsService,
-            IResolveCsvRepository resolveCsvRepository,
+            IResolveCsvService resolveCsvRepository,
+            IResolveS3Repository resolveS3Repository,
             IOptions<MailSettingsConfig> mailSettingsConfig,
             IHostApplicationLifetime hostApplicationLifetime,
             ILogger<ScrapingApp> logger)
         {
             _mailModel = mailModel;
             _resolveTopicsService = resolveTopicsService;
-            _resolveCsvRepository = resolveCsvRepository;
+            _resolveCsvService = resolveCsvRepository;
+            _resolveS3Repository = resolveS3Repository;
             _mailSettingsConfig = mailSettingsConfig.Value;
             _hostApplicationLifetime = hostApplicationLifetime;
             _logger = logger;
@@ -55,7 +58,8 @@ namespace ScrapingApp
                     await _mailModel.SendMail(context);
                     await Task.Delay(2000);
                 }
-                _resolveCsvRepository.UpdateCsv(targetTopics);
+                _resolveCsvService.UpdateCsv(targetTopics);
+                await _resolveS3Repository.UpdateCsvFile();
                 _hostApplicationLifetime.StopApplication();
             }
             catch(Exception ex)

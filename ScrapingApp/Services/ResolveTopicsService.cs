@@ -18,17 +18,20 @@ namespace ScrapingApp.Services
 
     public class ResolveTopicsService : IResolveTopicsService
     {
-        private readonly IResolveCsvRepository _resolveCsvRepository;
+        private readonly IResolveCsvService _resolveCsvService;
         private readonly IGetTopicRepository _getTopicRepository;
+        private readonly IResolveS3Repository _resolveS3Repository;
         private readonly ISystemDate _systemDate;
 
         public ResolveTopicsService(
-            IResolveCsvRepository resolveCsvRepository,
+            IResolveCsvService resolveCsvRepository,
             IGetTopicRepository getTopicRepository,
+            IResolveS3Repository resolveS3Repository,
             ISystemDate systemDate)
         {
-            _resolveCsvRepository = resolveCsvRepository;
+            _resolveCsvService = resolveCsvRepository;
             _getTopicRepository = getTopicRepository;
+            _resolveS3Repository = resolveS3Repository;
             _systemDate = systemDate;
         }
 
@@ -51,7 +54,9 @@ namespace ScrapingApp.Services
         public async ValueTask<IEnumerable<Topic>> GetSendTargets()
         {
             var targets = await _getTopicRepository.GetTopicDataAsync();
-            return FormatRawTopics(targets).FilterTopicsWithCsv(_resolveCsvRepository.GetTopics());
+            var csvFile = await _resolveS3Repository.GetCsvFile();
+            var topics = await _resolveCsvService.GetTopicsAsync(csvFile);
+            return FormatRawTopics(targets).FilterTopicsWithCsv(topics);
         }
     }
     

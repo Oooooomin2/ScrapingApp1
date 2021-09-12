@@ -5,9 +5,9 @@ namespace ScrapingApp
 {
     class Program
     {
-        static async Task Main(string[] args) => await CreateHostBuilder(args).Build().RunAsync();
+        static async Task Main() => await CreateHostBuilder().Build().RunAsync();
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {

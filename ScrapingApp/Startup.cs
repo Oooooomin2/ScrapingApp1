@@ -20,12 +20,14 @@ namespace ScrapingApp
         {
             services.Configure<MailSettingsConfig>(Configuration.GetSection(MailSettingsConfig.SectionName));
             services.Configure<ScrapingTargetsConfig>(Configuration.GetSection(ScrapingTargetsConfig.SectionName));
-            services.Configure<StorageConfig>(Configuration.GetSection(StorageConfig.SectionName));
+            services.Configure<LocalStorageConfig>(Configuration.GetSection(LocalStorageConfig.SectionName));
+            services.Configure<AWSConfig>(Configuration.GetSection(AWSConfig.SectionName));
 
             services.AddHttpClient();
             services.AddSingleton<IMailModel, MailModel>();
             services.AddSingleton<IGetTopicRepository, GetTopicRepository>();
-            services.AddSingleton<IResolveCsvRepository, ResolveCsvRepository>();
+            services.AddSingleton<IResolveCsvService, ResolveCsvService>();
+            services.AddSingleton<IResolveS3Repository, ResolveS3Repository>();
             services.AddSingleton<IResolveTopicsService, ResolveTopicsService>();
             services.AddSingleton<ISystemDate, SystemDate>();
 

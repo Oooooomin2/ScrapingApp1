@@ -1,0 +1,24 @@
+
+{
+    "Information" : [
+        "This file provides default values for the deployment wizard inside Visual Studio and the AWS Lambda commands added to the .NET Core CLI.",
+        "To learn more about the Lambda commands with the .NET Core CLI execute the following command at the command line in the project root directory.",
+        "dotnet lambda help",
+        "All the command line options for the Lambda command can be specified in this file."
+    ],
+    "profile"     : "mineo",
+    "region"      : "ap-northeast-1",
+    "configuration" : "Release",
+    "framework"     : "netcoreapp3.1",
+    "function-runtime" : "dotnetcore3.1",
+    "function-memory-size" : 128,
+    "function-timeout"     : 300,
+    "function-handler"     : "ScrapingApp::ScrapingApp.Program::Main",
+    "function-name"        : "ScrapingApp",
+    "function-description" : "サイトのスクレイピング結果をメールで送信します。",
+    "package-type"         : "Zip",
+    "function-role"        : "arn:aws:iam::726481072631:role/role-lambdaBasic",
+    "tracing-mode"         : "PassThrough",
+    "environment-variables" : "",
+    "image-tag"             : ""
+}
