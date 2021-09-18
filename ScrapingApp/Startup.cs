@@ -30,6 +30,8 @@ namespace ScrapingApp
             services.AddSingleton<IResolveS3Repository, ResolveS3Repository>();
             services.AddSingleton<IResolveTopicsService, ResolveTopicsService>();
             services.AddSingleton<ISystemDate, SystemDate>();
+
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddAWSService<IAmazonS3>();
 
             services.AddHostedService<ScrapingApp>();
