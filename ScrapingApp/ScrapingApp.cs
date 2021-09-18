@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using ScrapingApp.Configs;
-using ScrapingApp.Dtos;
 using ScrapingApp.Models;
 using ScrapingApp.Repositories;
 using ScrapingApp.Services;
@@ -14,27 +11,25 @@ namespace ScrapingApp
 {
     public class ScrapingApp : IHostedService
     {
-        private readonly IMailModel _mailModel;
+        private readonly ILineModel _lineModel;
         private readonly IResolveTopicsService _resolveTopicsService;
         private readonly IResolveCsvService _resolveCsvService;
         private readonly IResolveS3Repository _resolveS3Repository;
-        private readonly MailSettingsConfig _mailSettingsConfig;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
         private readonly ILogger<ScrapingApp> _logger;
+
         public ScrapingApp(
-            IMailModel mailModel,
+            ILineModel lineModel,
             IResolveTopicsService resolveTopicsService,
             IResolveCsvService resolveCsvRepository,
             IResolveS3Repository resolveS3Repository,
-            IOptions<MailSettingsConfig> mailSettingsConfig,
             IHostApplicationLifetime hostApplicationLifetime,
             ILogger<ScrapingApp> logger)
         {
-            _mailModel = mailModel;
+            _lineModel = lineModel;
             _resolveTopicsService = resolveTopicsService;
             _resolveCsvService = resolveCsvRepository;
             _resolveS3Repository = resolveS3Repository;
-            _mailSettingsConfig = mailSettingsConfig.Value;
             _hostApplicationLifetime = hostApplicationLifetime;
             _logger = logger;
         }
@@ -44,20 +39,8 @@ namespace ScrapingApp
             try
             {
                 var targetTopics = await _resolveTopicsService.GetSendTargets();
-                var mailBody = _mailModel.CreateMailBody(targetTopics);
-                for (var i = 0; i < _mailSettingsConfig.TargetsTo.Length; i++)
-                {
-                    var mail = new Mail
-                    {
-                        To = _mailSettingsConfig.TargetsTo[i],
-                        Bcc = _mailSettingsConfig.TargetsBcc[0],
-                        Subject = _mailSettingsConfig.Subject,
-                        Body = mailBody
-                    };
-                    var context = _mailModel.CreateMailContext(mail);
-                    await _mailModel.SendMail(context);
-                    await Task.Delay(2000);
-                }
+                var lineMessage = _lineModel.CreateMessageBody(targetTopics);
+                await _lineModel.SendMessage(lineMessage);
                 _resolveCsvService.UpdateCsv(targetTopics);
                 await _resolveS3Repository.UpdateCsvFile();
                 _hostApplicationLifetime.StopApplication();
@@ -70,9 +53,6 @@ namespace ScrapingApp
             }
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            await Task.CompletedTask;
-        }
+        public async Task StopAsync(CancellationToken cancellationToken) => await Task.CompletedTask;
     }
 }

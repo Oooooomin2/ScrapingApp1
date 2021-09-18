@@ -62,11 +62,7 @@ namespace ScrapingApp.Services
     
     public static class ResolveTopicsExtensions
     {
-        public static IEnumerable<Topic> FilterTopicsWithCsv(
-            this IEnumerable<Topic> topics,
-            IEnumerable<Topic> targets)
-        {
-            return topics.Except(targets);
-        }
+        public static IEnumerable<Topic> FilterTopicsWithCsv(this IEnumerable<Topic> topics, IEnumerable<Topic> targets)
+            => topics.Except(targets);
     }
 }

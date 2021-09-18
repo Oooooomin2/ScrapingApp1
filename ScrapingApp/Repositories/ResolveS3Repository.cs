@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.Extensions.Options;
 using ScrapingApp.Configs;
@@ -26,22 +25,20 @@ namespace ScrapingApp.Repositories
     {
         private readonly AWSConfig _awsConfig;
         private readonly LocalStorageConfig _localStorageConfig;
-        private readonly BasicAWSCredentials _awsCredentials;
-        private readonly AmazonS3Client _amazonS3Client;
+        private readonly IAmazonS3 _amazonS3Client;
+
         public ResolveS3Repository(
             IOptions<AWSConfig> awsConfig,
-            IOptions<LocalStorageConfig> localStorageConfig)
+            IOptions<LocalStorageConfig> localStorageConfig,
+            IAmazonS3 amazonS3Client)
         {
             _awsConfig = awsConfig.Value;
             _localStorageConfig = localStorageConfig.Value;
-            _awsCredentials = new BasicAWSCredentials(_awsConfig.IAM.AccessKey, _awsConfig.IAM.SecretKey);
-            _amazonS3Client = new AmazonS3Client(_awsCredentials, Amazon.RegionEndpoint.APNortheast1);
+            _amazonS3Client = amazonS3Client;
         }
 
         public async ValueTask<GetObjectResponse> GetCsvFile()
-        {
-            return await _amazonS3Client.GetObjectAsync(_awsConfig.S3.BacketName, _awsConfig.S3.Key);
-        }
+            => await _amazonS3Client.GetObjectAsync(_awsConfig.S3.BacketName, _awsConfig.S3.Key);
 
         public async ValueTask UpdateCsvFile()
         {

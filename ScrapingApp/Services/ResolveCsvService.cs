@@ -22,9 +22,7 @@ namespace ScrapingApp.Services
     {
         private readonly LocalStorageConfig _localStorageConfig;
         public ResolveCsvService(IOptions<LocalStorageConfig> storageConfig)
-        {
-            _localStorageConfig = storageConfig.Value;
-        }
+            => _localStorageConfig = storageConfig.Value;
 
         public async Task<IReadOnlyCollection<Topic>> GetTopicsAsync(GetObjectResponse csvFile)
         {

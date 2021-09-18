@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace ScrapingApp.Dtos
 {
     public sealed class Topic : IEquatable<Topic>

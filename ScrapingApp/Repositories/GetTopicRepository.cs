@@ -21,6 +21,7 @@ namespace ScrapingApp.Repositories
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly ScrapingTargetsConfig _scrapingTargetsConfig;
+
         public GetTopicRepository(IHttpClientFactory clientFactory, IOptions<ScrapingTargetsConfig> scrapingTargetsConfig)
         {
             _clientFactory = clientFactory;
