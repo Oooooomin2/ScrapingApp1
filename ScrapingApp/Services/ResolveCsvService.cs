@@ -14,7 +14,7 @@ namespace ScrapingApp.Services
 {
     public interface IResolveCsvService
     {
-        Task<IReadOnlyCollection<Topic>> GetTopicsAsync(GetObjectResponse csvFile);
+        ValueTask<IReadOnlyCollection<Topic>> GetTopicsAsync(GetObjectResponse csvFile);
         void UpdateCsv(IEnumerable<Topic> topicList);
     }
 
@@ -24,7 +24,7 @@ namespace ScrapingApp.Services
         public ResolveCsvService(IOptions<LocalStorageConfig> storageConfig)
             => _localStorageConfig = storageConfig.Value;
 
-        public async Task<IReadOnlyCollection<Topic>> GetTopicsAsync(GetObjectResponse csvFile)
+        public async ValueTask<IReadOnlyCollection<Topic>> GetTopicsAsync(GetObjectResponse csvFile)
         {
             var filePathTmp = _localStorageConfig.CsvPath;
             await csvFile.WriteResponseStreamToFileAsync(filePathTmp, false, System.Threading.CancellationToken.None);

@@ -37,18 +37,14 @@ namespace ScrapingApp.Services
 
         public IEnumerable<Topic> FormatRawTopics(IHtmlCollection<IElement> elements)
         {
-            var topicList = new List<Topic>();
             var yearStr = _systemDate.GetSystemDate().Year.ToString();
-            foreach (var element in elements)
-            {
-                topicList.Add(new Topic
+            return elements
+                .Select(o => new Topic
                 {
-                    Title = $"{element.QuerySelector("").TextContent}",
-                    CreatedTime = DateTime.Parse($"{yearStr}/{element.QuerySelector("").TextContent}"),
-                    Url = element.QuerySelector("").GetAttribute("href")
+                    Title = $"{o.QuerySelector("").TextContent}",
+                    CreatedTime = DateTime.Parse($"{yearStr}/{o.QuerySelector("").TextContent}"),
+                    Url = o.QuerySelector("").GetAttribute("href")
                 });
-            }
-            return topicList;
         }
 
         public async ValueTask<IEnumerable<Topic>> GetSendTargets()

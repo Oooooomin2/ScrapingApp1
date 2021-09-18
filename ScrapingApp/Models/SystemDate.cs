@@ -5,6 +5,7 @@ namespace ScrapingApp.Models
     {
         DateTime GetSystemDate();
     }
+
     public class SystemDate : ISystemDate
     {
         public DateTime GetSystemDate() => DateTime.Now;

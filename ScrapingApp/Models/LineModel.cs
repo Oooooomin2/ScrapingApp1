@@ -12,7 +12,7 @@ namespace ScrapingApp.Models
 {
     public interface ILineModel
     {
-        Task SendMessage(string message);
+        ValueTask SendMessage(string message);
 
         string CreateMessageBody(IEnumerable<Topic> topics);
     }
@@ -43,7 +43,7 @@ namespace ScrapingApp.Models
             return sb.ToString();
         }
 
-        public async Task SendMessage(string message)
+        public async ValueTask SendMessage(string message)
         {
             var content = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
