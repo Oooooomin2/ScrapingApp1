@@ -1,0 +1,36 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application.",
+  "Resources": {
+    "ScrapingApp": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "FunctionName": "ScrapingApp",
+        "Description": "サイトのスクレイピング結果をメールで送信します。",
+        "Handler": "ScrapingApp::ScrapingApp.Program::Main",
+        "Runtime": "dotnetcore3.1",
+        "MemorySize": 128,
+        "Timeout": 300,
+        "Role": "",
+        "Policies": [
+          "role-lambdaBasic"
+        ],
+        "Events":{ 
+            "EventBridge" : {
+                "Type" : "EventBridgeRule",
+                "Properties" : {
+                    "EventBusName" : "default",
+                    "Pattern": {
+                        "Name": [ "SendNewTopics" ],
+                        "State": [ "ENABLED" ],
+                        "ScheduleExpression": [ "cron(0 22,8 * * ? *)" ],
+                        "Target": [ "ScrapingApp" ]
+                    }
+                }
+            }
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@
         "dotnet lambda help",
         "All the command line options for the Lambda command can be specified in this file."
     ],
-    "profile"     : "mineo",
+    "profile"     : "default",
     "region"      : "ap-northeast-1",
     "configuration" : "Release",
     "framework"     : "netcoreapp3.1",
@@ -17,8 +17,11 @@
     "function-name"        : "ScrapingApp",
     "function-description" : "サイトのスクレイピング結果をメールで送信します。",
     "package-type"         : "Zip",
-    "function-role"        : "arn:aws:iam::726481072631:role/role-lambdaBasic",
+    "function-role"        : "",
     "tracing-mode"         : "PassThrough",
     "environment-variables" : "",
-    "image-tag"             : ""
+    "image-tag"             : "",
+    "s3-bucket"             : "scrapingappbacket",
+    "template"              : "serverless.template",
+    "stack-name"            : "ScrapingApp"
 }
