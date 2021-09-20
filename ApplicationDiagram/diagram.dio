@@ -71,15 +71,6 @@
                 <mxCell id="26" value="LINE&lt;br&gt;Notify" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=1;fillColor=#008a00;strokeColor=#005700;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="465.5" y="617" width="90" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16;fontColor=#FFFFFF;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="700.5" y="604.75" width="30" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="28" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16;fontColor=#FFFFFF;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="670.5" y="672.25" width="30" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="29" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16;fontColor=#FFFFFF;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="734.5" y="672.25" width="30" height="60" as="geometry"/>
-                </mxCell>
                 <mxCell id="36" value="スクレイピング結果を取得" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="400" y="240" width="180" height="20" as="geometry"/>
                 </mxCell>
@@ -112,6 +103,9 @@
                 </mxCell>
                 <mxCell id="49" value="S3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontSize=14;" vertex="1" parent="1">
                     <mxGeometry x="698.39" y="440" width="30" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="" style="shape=mxgraph.cisco.people.man_woman;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
+                    <mxGeometry x="672.5" y="600" width="93" height="137.5" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
