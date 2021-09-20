@@ -18,15 +18,11 @@
         ],
         "Events":{ 
             "EventBridge" : {
-                "Type" : "EventBridgeRule",
+                "Type" : "Schedule",
                 "Properties" : {
-                    "EventBusName" : "default",
-                    "Pattern": {
-                        "Name": [ "SendNewTopics" ],
-                        "State": [ "ENABLED" ],
-                        "ScheduleExpression": [ "cron(0 22,8 * * ? *)" ],
-                        "Target": [ "ScrapingApp" ]
-                    }
+                    "Schedule" : "cron(0 22,8 * * ? *)",
+                    "Name": "ScrapingAppEventBridge",
+                    "Description": "ScrapingApp関数のトリガーです。"
                 }
             }
         }
