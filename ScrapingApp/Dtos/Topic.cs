@@ -7,10 +7,18 @@ namespace ScrapingApp.Dtos
         public DateTime CreatedTime { get; set; }
         public string Url { get; set; }
 
-        public bool Equals(Topic other) => Title == other.Title;
+        public bool Equals(Topic other)
+        {
+            if (other == null) return false;
+            return Title == other.Title;
+        }
 
-        public override bool Equals(object obj) => Equals(obj as Topic);
+        public override bool Equals(object obj)
+        {
+            if (obj is Topic sample) return Equals(sample);
+            return false;
+        }
 
-        public override int GetHashCode() => Title.GetHashCode();
+        public override int GetHashCode() => 0;
     }
 }
