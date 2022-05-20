@@ -4,6 +4,7 @@ using ScrapingApp.Models;
 using ScrapingApp.Repositories;
 using ScrapingApp.Services;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,6 +40,11 @@ namespace ScrapingApp
             try
             {
                 var targetTopics = await _resolveTopicsService.GetSendTargets();
+                if (!targetTopics.Any())
+                {
+                    _hostApplicationLifetime.StopApplication();
+                }
+
                 var lineMessage = _lineModel.CreateMessageBody(targetTopics);
                 await _lineModel.SendMessage(lineMessage);
                 _resolveCsvService.UpdateCsv(targetTopics);

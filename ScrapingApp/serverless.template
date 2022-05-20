@@ -12,7 +12,7 @@
         "Runtime": "dotnetcore3.1",
         "MemorySize": 128,
         "Timeout": 300,
-        "Role": "",
+        "Role": "arn:aws:iam::726481072631:role/role-lambdaBasic",
         "Policies": [
           "role-lambdaBasic"
         ],

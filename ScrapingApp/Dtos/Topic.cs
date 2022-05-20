@@ -10,7 +10,7 @@ namespace ScrapingApp.Dtos
         public bool Equals(Topic other)
         {
             if (other == null) return false;
-            return Title == other.Title;
+            return Title == other.Title && CreatedTime == other.CreatedTime;
         }
 
         public override bool Equals(object obj)

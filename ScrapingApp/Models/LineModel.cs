@@ -30,8 +30,6 @@ namespace ScrapingApp.Models
 
         public string CreateMessageBody(IEnumerable<Topic> topics)
         {
-            if (!topics.Any()) return _lineSettingsConfig.DefaultResponse;
-
             var sb = new StringBuilder();
             foreach (var topic in topics)
             {

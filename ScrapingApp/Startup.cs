@@ -16,14 +16,12 @@ namespace ScrapingApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MailSettingsConfig>(Configuration.GetSection(MailSettingsConfig.SectionName));
             services.Configure<LineSettingsConfig>(Configuration.GetSection(LineSettingsConfig.SectionName));
             services.Configure<ScrapingTargetsConfig>(Configuration.GetSection(ScrapingTargetsConfig.SectionName));
             services.Configure<LocalStorageConfig>(Configuration.GetSection(LocalStorageConfig.SectionName));
             services.Configure<AWSConfig>(Configuration.GetSection(AWSConfig.SectionName));
 
             services.AddHttpClient();
-            services.AddSingleton<IMailModel, MailModel>();
             services.AddSingleton<ILineModel, LineModel>();
             services.AddSingleton<IGetTopicRepository, GetTopicRepository>();
             services.AddSingleton<IResolveCsvService, ResolveCsvService>();
